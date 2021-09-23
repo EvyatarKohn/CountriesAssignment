@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.evyatar.belonglife.R
 import com.evyatar.belonglife.model.CountriesModelItem
@@ -18,14 +20,8 @@ import kotlinx.android.synthetic.main.countries_list_fragment.*
 class CountriesListFragment: Fragment() {
 
     private val mViewModel: MainViewModel by viewModels()
-    private lateinit var mMainListener: MainListener
     private lateinit var mCountriesAdapter: CountriesAdapter
-
-    companion object {
-        fun newInstance(mainListener: MainListener) = CountriesListFragment().apply {
-            mMainListener = mainListener
-        }
-    }
+    private lateinit var mNavController: NavController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,21 +29,26 @@ class CountriesListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val v = inflater.inflate(R.layout.countries_list_fragment, container, false)
+        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        mNavController = navHostFragment.navController
 
         mViewModel.getAllCountries()
-
         mViewModel.countriesLiveData.observe(viewLifecycleOwner, { countrise->
-            setCountriesAdapter(countrise)
+            loader_lottie.visibility= View.GONE
+            setCountriesAdapter(countrise, mNavController)
         })
 
         return v
     }
 
-    private fun setCountriesAdapter(countriesList: List<CountriesModelItem>) {
+    private fun setCountriesAdapter(
+        countriesList: List<CountriesModelItem>,
+        mNavController: NavController
+    ) {
         val sortedList = countriesList.sortedBy {
             it.name.common
         }
-        mCountriesAdapter = CountriesAdapter(sortedList, mMainListener)
+        mCountriesAdapter = CountriesAdapter(sortedList, mNavController)
         val layoutManager = LinearLayoutManager(activity?.applicationContext)
         countries_recycler_view.layoutManager = layoutManager
         countries_recycler_view.adapter = mCountriesAdapter

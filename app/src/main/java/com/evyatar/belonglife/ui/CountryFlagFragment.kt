@@ -14,23 +14,19 @@ import kotlinx.android.synthetic.main.country_flag_layout.*
 class CountryFlagFragment: Fragment() {
 
     private lateinit var mFlag: String
-    companion object {
-        fun newInstance(countryFlag: String) = CountryFlagFragment().apply {
-            mFlag = countryFlag
-        }
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        UrlImageViewHelper.setUrlDrawable(country_flag, mFlag)
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.country_flag_layout, container, false)
+        val v = inflater.inflate(R.layout.country_flag_layout, container, false)
+
+//        UrlImageViewHelper.setUrlDrawable(country_flag, arguments?.getString("flag").toString())
+
+        return v
     }
 
 }
