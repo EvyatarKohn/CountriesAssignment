@@ -17,7 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.countries_list_fragment.*
 
 @AndroidEntryPoint
-class CountriesListFragment: Fragment() {
+class CountriesListFragment : Fragment() {
 
     private val mViewModel: MainViewModel by viewModels()
     private lateinit var mCountriesAdapter: CountriesAdapter
@@ -29,12 +29,13 @@ class CountriesListFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val v = inflater.inflate(R.layout.countries_list_fragment, container, false)
-        val navHostFragment = activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            activity?.supportFragmentManager?.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         mNavController = navHostFragment.navController
 
         mViewModel.getAllCountries()
-        mViewModel.countriesLiveData.observe(viewLifecycleOwner, { countrise->
-            loader_lottie.visibility= View.GONE
+        mViewModel.countriesLiveData.observe(viewLifecycleOwner, { countrise ->
+            loader_lottie.visibility = View.GONE
             setCountriesAdapter(countrise, mNavController)
         })
 

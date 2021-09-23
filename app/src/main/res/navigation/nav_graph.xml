@@ -20,8 +20,8 @@
         android:id="@+id/countryFlagFragment"
         android:name="com.evyatar.belonglife.ui.CountryFlagFragment"
         android:label="CountryFlagFragment">
-       <!-- <argument
+        <argument
             android:name="flag"
-            android:defaultValue="None" />-->
+            android:defaultValue="None" />
     </fragment>
 </navigation>
