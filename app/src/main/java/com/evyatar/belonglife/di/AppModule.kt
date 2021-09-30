@@ -1,5 +1,8 @@
 package com.evyatar.belonglife.di
 
+import android.app.Application
+import androidx.room.Room
+import com.evyatar.belonglife.db.CountryDataBase
 import com.evyatar.belonglife.network.MainApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -13,12 +16,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
     private var logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     private val client = OkHttpClient.Builder().addInterceptor(logging).build()
+
 
     @Singleton
     @Provides
@@ -30,7 +35,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(gson: Gson):MainApi =
+    fun provideRetrofit(gson: Gson): MainApi =
         Retrofit.Builder()
             .baseUrl("https://restcountries.com/v3/")
             .addConverterFactory(GsonConverterFactory.create(gson))

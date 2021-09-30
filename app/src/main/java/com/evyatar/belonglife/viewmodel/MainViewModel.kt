@@ -21,6 +21,7 @@ class MainViewModel @Inject constructor(private val repository: CountriesReposit
     val requestFailureLiveData: LiveData<Boolean>
         get() = mRequestFailureMutableLiveData
 
+
     fun getAllCountries() = viewModelScope.launch {
         repository.getAllCountries().let { response ->
             if (response.isSuccessful) {

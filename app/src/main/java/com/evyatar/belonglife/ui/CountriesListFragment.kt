@@ -1,5 +1,6 @@
 package com.evyatar.belonglife.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.evyatar.belonglife.R
 import com.evyatar.belonglife.model.CountriesModelItem
+import com.evyatar.belonglife.repository.CountriesRepository
 import com.evyatar.belonglife.ui.adapters.CountriesAdapter
 import com.evyatar.belonglife.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.countries_list_fragment.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CountriesListFragment : Fragment() {
@@ -36,7 +39,9 @@ class CountriesListFragment : Fragment() {
         mViewModel.getAllCountries()
         mViewModel.countriesLiveData.observe(viewLifecycleOwner, { countrise ->
             loader_lottie.visibility = View.GONE
-            setCountriesAdapter(countrise, mNavController)
+            activity?.applicationContext?.let {
+                setCountriesAdapter(countrise, mNavController)
+            }
         })
 
         return v
@@ -44,12 +49,12 @@ class CountriesListFragment : Fragment() {
 
     private fun setCountriesAdapter(
         countriesList: List<CountriesModelItem>,
-        mNavController: NavController
+        mNavController: NavController,
     ) {
         val sortedList = countriesList.sortedBy {
             it.name.common
         }
-        mCountriesAdapter = CountriesAdapter(sortedList, mNavController)
+        mCountriesAdapter = CountriesAdapter(sortedList, mNavController, activity?.applicationContext!!)
         val layoutManager = LinearLayoutManager(activity?.applicationContext)
         countries_recycler_view.layoutManager = layoutManager
         countries_recycler_view.adapter = mCountriesAdapter

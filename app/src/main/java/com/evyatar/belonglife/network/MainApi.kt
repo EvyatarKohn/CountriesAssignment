@@ -7,5 +7,5 @@ import retrofit2.http.Query
 
 interface MainApi {
     @GET("all")
-    suspend fun getAllCountries(@Query("access_key") apiKey: String): Response<CountriesModel>
+    suspend fun getAllCountries(): Response<CountriesModel>
 }

@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.evyatar.belonglife.R
+import com.evyatar.belonglife.repository.CountriesRepository
 import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.country_flag_layout.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CountryFlagFragment : Fragment() {
